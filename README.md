@@ -1,5 +1,7 @@
 # NumToKorean
 
+[![Build Status](https://travis-ci.org/huskyhoochu/num-to-korean.svg?branch=master)](https://travis-ci.org/huskyhoochu/num-to-korean)
+
 > 숫자를 한글 표기로 변환해주는 함수
 
 ## Summary
@@ -32,3 +34,11 @@ import { numToKorean } from 'num-to-korean';
 const number = numToKorean(12345678);
 // -> '일천이백삼십사만오천육백칠십팔'
 ```
+
+## Test
+
+```
+yarn test
+```
+
+`test` 폴더에 기초적인 테스트 케이스를 추가해두었습니다.
