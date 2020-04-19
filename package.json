@@ -8,7 +8,8 @@
   "author": "huskyhoochu <dfg1499@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^13.13.0",
