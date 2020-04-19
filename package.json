@@ -1,6 +1,6 @@
 {
   "name": "num-to-korean",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Function to write numbers in Korean",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,10 +10,16 @@
   "files": [
     "dist"
   ],
+  "keywords": [
+    "number",
+    "korean",
+    "숫자",
+    "한글"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "webpack --mode=production",
     "prepare": "npm run build",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -23,6 +29,10 @@
     "@types/node": "^13.13.0",
     "babel-jest": "^25.3.0",
     "jest": "^25.3.0",
-    "typescript": "^3.8.3"
+    "ts-loader": "^7.0.0",
+    "typescript": "^3.8.3",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   }
 }
