@@ -36,10 +36,8 @@ export function numToKorean(num: number): string {
     .map((slicedByDot: string[]) => {
       const joinedItem = slicedByDot.join('');
 
-      if (slicedByDot.length > 1 && joinedItem.length < 2) {
-        if (dotSymbol.includes(joinedItem)) {
-          return [];
-        }
+      if (dotSymbol.includes(joinedItem)) {
+        return [];
       }
 
       return [...slicedByDot].reverse();
