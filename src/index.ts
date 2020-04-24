@@ -40,7 +40,7 @@ export function numToKorean(num: number): string {
         return [];
       }
 
-      return [...slicedByDot].reverse();
+      return slicedByDot.reverse();
     });
 
   return flatten(removeUnusedDot).join('');
