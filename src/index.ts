@@ -32,7 +32,6 @@ export function numToKorean(num: number): string {
 
   // 불필요하게 첨가된 단위 제거
   const removeUnusedDot = splitEvery(4, koreanArr)
-    .reverse()
     .map((slicedByDot: string[]) => {
       const joinedItem = slicedByDot.join('');
 
@@ -40,8 +39,8 @@ export function numToKorean(num: number): string {
         return [];
       }
 
-      return slicedByDot.reverse();
-    });
+      return slicedByDot;
+    })
 
-  return flatten(removeUnusedDot).join('');
+  return flatten(removeUnusedDot).reverse().join('');
 }
