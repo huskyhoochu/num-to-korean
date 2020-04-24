@@ -14,14 +14,14 @@ module.exports = {
       {
         test: /\.ts?$/,
         use: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
   },
   optimization: {
-    minimizer: [new UglifyJsPlugin()]
-  }
-}
+    minimizer: [new UglifyJsPlugin()],
+  },
+};

@@ -28,7 +28,7 @@
       "prettier",
       "eslint"
     ],
-    "*.{json,md}": [
+    "*.{json,md,js}": [
       "prettier"
     ]
   },
