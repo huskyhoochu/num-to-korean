@@ -31,15 +31,7 @@ export function numToKorean(num: number): string {
 
   // 불필요하게 첨가된 단위 제거
   const removeUnusedDot = splitEvery(4, koreanArr)
-    .map((slicedByDot: string[]) => {
-      const joinedItem = slicedByDot.join('');
-
-      if (dotSymbol.includes(joinedItem)) {
-        return [];
-      }
-
-      return slicedByDot;
-    });
+    .filter((slicedByDot: string[]) => !dotSymbol.includes(slicedByDot.join('')));
 
   return flatten(removeUnusedDot).reverse().join('');
 }
