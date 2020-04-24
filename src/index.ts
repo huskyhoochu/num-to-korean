@@ -17,33 +17,29 @@ export function numToKorean(num: number): string {
     .toString()
     .split('')
     .map((numText: string) => parseInt(numText, 10))
-    .map((item: number, index: number, originArr: number[]) => {
-      const reverseIndex = originArr.length - index - 1;
-      const powerIndex = reverseIndex % 4;
-      const dotIndex = Math.ceil(reverseIndex / 4);
+    .reverse()
+    .map((item: number, index: number) => {
+      const powerIndex = index % 4;
+      const dotIndex = Math.ceil(index / 4);
 
       const text = textSymbol[item];
       const power = item === 0 ? '' : powerSymbol[powerIndex];
       const dot = powerIndex === 0 ? dotSymbol[dotIndex] : '';
 
       return `${text}${power}${dot}`;
-    })
-    .reverse();
+    });
 
   // 불필요하게 첨가된 단위 제거
   const removeUnusedDot = splitEvery(4, koreanArr)
-    .reverse()
     .map((slicedByDot: string[]) => {
       const joinedItem = slicedByDot.join('');
 
-      if (slicedByDot.length > 1 && joinedItem.length < 2) {
-        if (dotSymbol.includes(joinedItem)) {
-          return [];
-        }
+      if (dotSymbol.includes(joinedItem)) {
+        return [];
       }
 
-      return [...slicedByDot].reverse();
+      return slicedByDot;
     });
 
-  return flatten(removeUnusedDot).join('');
+  return flatten(removeUnusedDot).reverse().join('');
 }
