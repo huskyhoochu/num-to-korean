@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2020.04.24 - v0.1.3
+
+- eslint, prettier 추가
+- git hooks를 이용한 자동 포맷팅
+
 ## 2020.04.19 - v0.1.2
 
 - webpack 번들러 추가

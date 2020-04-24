@@ -27,8 +27,9 @@ const { numToKorean } = require('num-to-korean');
 const billion = numToKorean(100000000);
 // -> '일억'
 ```
+
 ```
-// After ES6 
+// After ES6
 import { numToKorean } from 'num-to-korean';
 
 const number = numToKorean(12345678);

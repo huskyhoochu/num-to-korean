@@ -13,9 +13,9 @@ describe('숫자 금액을 한글로 변환하기 테스트', () => {
       },
     ];
 
-    for (const answer of answers) {
+    answers.forEach((answer) => {
       expect(numToKorean(answer.num)).toBe(answer.korean);
-    }
+    });
   });
 
   test('일의자리', () => {
@@ -34,9 +34,9 @@ describe('숫자 금액을 한글로 변환하기 테스트', () => {
       },
     ];
 
-    for (const answer of answers) {
+    answers.forEach((answer) => {
       expect(numToKorean(answer.num)).toBe(answer.korean);
-    }
+    });
   });
 
   test('모든 자릿수가 숫자로 찼을 때', () => {
@@ -87,9 +87,9 @@ describe('숫자 금액을 한글로 변환하기 테스트', () => {
       },
     ];
 
-    for (const answer of answers) {
+    answers.forEach((answer) => {
       expect(numToKorean(answer.num)).toBe(answer.korean);
-    }
+    });
   });
 
   test('0과 0이 아닌 숫자가 섞였을 때', () => {
@@ -116,9 +116,9 @@ describe('숫자 금액을 한글로 변환하기 테스트', () => {
       },
     ];
 
-    for (const answer of answers) {
+    answers.forEach((answer) => {
       expect(numToKorean(answer.num)).toBe(answer.korean);
-    }
+    });
   });
 
   test('극단적으로 큰 수', () => {
@@ -133,8 +133,8 @@ describe('숫자 금액을 한글로 변환하기 테스트', () => {
       },
     ];
 
-    for (const answer of answers) {
+    answers.forEach((answer) => {
       expect(numToKorean(answer.num)).toBe(answer.korean);
-    }
+    });
   });
 });
