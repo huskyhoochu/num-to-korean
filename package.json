@@ -1,6 +1,6 @@
 {
   "name": "num-to-korean",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Function to write numbers in Korean",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
