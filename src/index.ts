@@ -7,10 +7,20 @@ const powerSymbol = ['', '십', '백', '천'];
 // 4자리마다 커지는 단위수 배열
 const dotSymbol = ['', '만', '억', '조', '경'];
 
-export function numToKorean(num: number): string {
+interface FormatOptions {
+  spacing: boolean;
+}
+
+const initialOptions: FormatOptions = {
+  spacing: false,
+}
+
+export function numToKorean(num: number, formatOptions?: FormatOptions): string {
   if (Number.isNaN(num)) {
     return '';
   }
+
+  const options = formatOptions || initialOptions;
 
   // 숫자를 한글 배열로 변환
   const koreanArr = num
@@ -33,5 +43,19 @@ export function numToKorean(num: number): string {
   const removeUnusedDot = splitEvery(4, koreanArr)
     .filter((slicedByDot: string[]) => !dotSymbol.includes(slicedByDot.join('')));
 
-  return flatten(removeUnusedDot).reverse().join('');
+  // 문자열 변환
+  const result = flatten(removeUnusedDot)
+    .reverse()
+    .filter((token: string) => token)
+    .map((token: string) => {
+      if (options.spacing && dotSymbol.includes(token.slice(-1))) {
+        return `${token} `;
+      }
+
+      return token;
+    })
+    .join('')
+    .trim();
+
+  return result;
 }
