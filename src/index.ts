@@ -1,4 +1,4 @@
-import { splitEvery, flatten } from './utils';
+import { splitEvery } from './utils';
 
 // 한글로 바꿀 숫자 배열
 const textSymbol = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
@@ -44,7 +44,8 @@ export function numToKorean(num: number, formatOptions?: FormatOptions): string 
     .filter((slicedByDot: string[]) => !dotSymbol.includes(slicedByDot.join('')));
 
   // 문자열 변환
-  const result = flatten(removeUnusedDot)
+  const result = removeUnusedDot
+    .reduce((acc, val) => acc.concat(val), [])
     .reverse()
     .filter((token: string) => token)
     .map((token: string) => {
