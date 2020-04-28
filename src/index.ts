@@ -7,7 +7,7 @@ const powerSymbol = ['', '십', '백', '천'];
 // 4자리마다 커지는 단위수 배열
 const dotSymbol = ['', '만', '억', '조', '경'];
 
-interface FormatOptions {
+export interface FormatOptions {
   spacing: boolean;
 }
 
