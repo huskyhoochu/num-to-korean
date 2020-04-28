@@ -16,7 +16,8 @@ const initialOptions: FormatOptions = {
 }
 
 export function numToKorean(num: number, formatOptions?: FormatOptions): string {
-  if (Number.isNaN(num)) {
+  // 예외 값 처리
+  if (!Number.isInteger(num)) {
     return '';
   }
 
