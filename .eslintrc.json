@@ -18,7 +18,8 @@
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     "import/extensions": ["error", "never"],
-    "import/prefer-default-export": 0
+    "import/prefer-default-export": 0,
+    "no-unused-vars": 0
   },
   "settings": {
     "import/resolver": {

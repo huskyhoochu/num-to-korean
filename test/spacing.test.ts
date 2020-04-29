@@ -1,4 +1,4 @@
-import { numToKorean } from '../src';
+import { numToKorean, FormatOptions } from '../src';
 
 describe('띄어쓰기 결과물 테스트', () => {
   test('만 단위 테스트', () => {
@@ -22,7 +22,7 @@ describe('띄어쓰기 결과물 테스트', () => {
     ];
 
     answers.forEach((answer) => {
-      expect(numToKorean(answer.num, { spacing: true })).toBe(answer.korean);
+      expect(numToKorean(answer.num, FormatOptions.SPACING)).toBe(answer.korean);
     });
   });
 
@@ -47,7 +47,7 @@ describe('띄어쓰기 결과물 테스트', () => {
     ];
 
     answers.forEach((answer) => {
-      expect(numToKorean(answer.num, { spacing: true })).toBe(answer.korean);
+      expect(numToKorean(answer.num, 'spacing')).toBe(answer.korean);
     });
   });
 
@@ -68,7 +68,7 @@ describe('띄어쓰기 결과물 테스트', () => {
     ];
 
     answers.forEach((answer) => {
-      expect(numToKorean(answer.num, { spacing: true })).toBe(answer.korean);
+      expect(numToKorean(answer.num, FormatOptions.SPACING)).toBe(answer.korean);
     });
   });
 });

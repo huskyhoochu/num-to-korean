@@ -7,21 +7,17 @@ const powerSymbol = ['', '십', '백', '천'];
 // 4자리마다 커지는 단위수 배열
 const dotSymbol = ['', '만', '억', '조', '경'];
 
-export interface FormatOptions {
-  spacing: boolean;
+export enum FormatOptions {
+  SPACING = 'spacing',
 }
 
-const initialOptions: FormatOptions = {
-  spacing: false,
-}
-
-export function numToKorean(num: number, formatOptions?: FormatOptions): string {
+export function numToKorean(num: number, formatOptions?: FormatOptions | string): string {
   // 예외 값 처리
   if (!Number.isInteger(num)) {
     return '';
   }
 
-  const options = formatOptions || initialOptions;
+  const options = formatOptions || '';
 
   // 숫자를 한글 배열로 변환
   const koreanArr = num
@@ -50,7 +46,7 @@ export function numToKorean(num: number, formatOptions?: FormatOptions): string 
     .reverse()
     .filter((token: string) => token)
     .map((token: string) => {
-      if (options.spacing && dotSymbol.includes(token.slice(-1))) {
+      if (options === FormatOptions.SPACING && dotSymbol.includes(token.slice(-1))) {
         return `${token} `;
       }
 
