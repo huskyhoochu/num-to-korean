@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2020.04.29 - v0.2.0
+
+- 만 단위 띄어쓰기 구현 ([#6](https://github.com/huskyhoochu/num-to-korean/issues/6))
+- 브라우저 환경 구동을 위한 Webpack 설정 변경
+
 ## 2020.04.26 - v0.1.5
 
 - 로직 간소화

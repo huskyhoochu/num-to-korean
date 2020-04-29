@@ -8,6 +8,8 @@
 
 NumToKorean은 숫자를 한글 표기로 변환해주는 함수입니다. 간단한 하나의 함수만 있습니다. 일의자리부터 경 단위까지의 모든 숫자를 한글로 변환해줍니다. 은행 등 금액을 다루어야 하는 환경에서 편리하게 사용할 수 있습니다.
 
+소개 페이지: [금액-한글 변환 프로젝트 npm 배포하기 | Huskyhoochu 기술 블로그](https://www.huskyhoochu.com/num-to-korean/)
+
 ## Installation
 
 ```
@@ -49,7 +51,7 @@ const number = numToKorean(12345678);
 
 ### Spacing: 만 단위 띄어쓰기
 
-[한글 맞춤법 44항](http://kornorms.korean.go.kr/regltn/regltnView.do?regltn_code=0001&regltn_no=264#a264)에 따라 만 단위 띄어쓰기를 지원합니다. ([#6](/issues/6))
+[한글 맞춤법 44항](http://kornorms.korean.go.kr/regltn/regltnView.do?regltn_code=0001&regltn_no=264#a264)에 따라 만 단위 띄어쓰기를 지원합니다. ([#6](https://github.com/huskyhoochu/num-to-korean/issues/6))
 
 ```
 import { numToKorean, FormatOptions } from 'num-to-korean';
