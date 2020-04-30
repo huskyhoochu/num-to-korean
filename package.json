@@ -17,7 +17,7 @@
     "한글"
   ],
   "scripts": {
-    "build": "webpack --mode=production",
+    "build": "rollup -c",
     "prepare": "npm run build",
     "test": "jest --coverage",
     "prettier": "prettier --write",
@@ -55,10 +55,10 @@
     "jest": "^25.3.0",
     "lint-staged": "^10.1.7",
     "prettier": "^2.0.5",
+    "rollup": "^2.7.5",
+    "rollup-plugin-terser": "^5.3.0",
+    "rollup-plugin-typescript2": "^0.27.0",
     "ts-loader": "^7.0.0",
-    "typescript": "^3.8.3",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "typescript": "^3.8.3"
   }
 }
