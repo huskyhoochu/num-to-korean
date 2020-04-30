@@ -3,12 +3,13 @@ const { terser } = require('rollup-plugin-terser');
 
 const pkg = require('./package.json');
 
-const banner = `/** @license num-to-korean v${pkg.version}\n`
-  + `* https://github.com/huskyhoochu/num-to-korean\n`
-  + `* (c) 2020-${new Date().getFullYear()} Seung Hyung Soo\n`
-  + `* This source code is licensed under the MIT license found in the\n`
-  + `* LICENSE file in the root directory of this source tree.\n`
-  + '*/\n';
+const banner =
+  `/** @license num-to-korean v${pkg.version}\n` +
+  `* https://github.com/huskyhoochu/num-to-korean\n` +
+  `* (c) 2020-${new Date().getFullYear()} Seung Hyung Soo\n` +
+  `* This source code is licensed under the MIT license found in the\n` +
+  `* LICENSE file in the root directory of this source tree.\n` +
+  '*/\n';
 
 module.exports = {
   input: 'src/num-to-korean.ts',
@@ -26,7 +27,7 @@ module.exports = {
       format: 'umd',
       exports: 'named',
       banner,
-      plugins: [terser()]
+      plugins: [terser()],
     },
     {
       file: 'dist/num-to-korean.cjs.js',
@@ -36,7 +37,5 @@ module.exports = {
       banner,
     },
   ],
-  plugins: [
-    typescript({tsconfig: './tsconfig.json'}),
-  ]
-}
+  plugins: [typescript({ tsconfig: './tsconfig.json' })],
+};
