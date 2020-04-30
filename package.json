@@ -2,11 +2,13 @@
   "name": "num-to-korean",
   "version": "0.2.0",
   "description": "Function to write numbers in Korean",
-  "main": "dist/num-to-korean.cjs.js",
-  "types": "dist/num-to-korean.d.ts",
   "repository": "https://github.com/huskyhoochu/num-to-korean.git",
   "author": "huskyhoochu <dfg1499@gmail.com> (https://www.huskyhoochu.com)",
   "license": "MIT",
+  "main": "dist/num-to-korean.cjs.js",
+  "types": "dist/num-to-korean.d.ts",
+  "unpkg": "dist/num-to-korean.min.js",
+  "jsdelivr": "dist/num-to-korean.min.js",
   "files": [
     "dist"
   ],
