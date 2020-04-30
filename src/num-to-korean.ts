@@ -12,6 +12,11 @@ export enum FormatOptions {
   MIXED = 'mixed',
 }
 
+/**
+ * Converts a number to Korean notation.
+ * @param num A number to convert into Korean notation.
+ * @param formatOptions A string to select a format.
+ */
 export function numToKorean(num: number, formatOptions?: FormatOptions | string): string {
   const options = formatOptions || '';
 
