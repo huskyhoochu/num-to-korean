@@ -1,12 +1,14 @@
 {
   "name": "num-to-korean",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Function to write numbers in Korean",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "repository": "https://github.com/huskyhoochu/num-to-korean.git",
   "author": "huskyhoochu <dfg1499@gmail.com> (https://www.huskyhoochu.com)",
   "license": "MIT",
+  "main": "dist/num-to-korean.cjs.js",
+  "types": "dist/num-to-korean.d.ts",
+  "unpkg": "dist/num-to-korean.min.js",
+  "jsdelivr": "dist/num-to-korean.min.js",
   "files": [
     "dist"
   ],
@@ -17,7 +19,7 @@
     "한글"
   ],
   "scripts": {
-    "build": "webpack --mode=production",
+    "build": "rollup -c",
     "prepare": "npm run build",
     "test": "jest --coverage",
     "prettier": "prettier --write",
@@ -55,10 +57,10 @@
     "jest": "^25.3.0",
     "lint-staged": "^10.1.7",
     "prettier": "^2.0.5",
+    "rollup": "^2.7.5",
+    "rollup-plugin-terser": "^5.3.0",
+    "rollup-plugin-typescript2": "^0.27.0",
     "ts-loader": "^7.0.0",
-    "typescript": "^3.8.3",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "typescript": "^3.8.3"
   }
 }
