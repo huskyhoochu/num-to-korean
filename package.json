@@ -1,6 +1,6 @@
 {
   "name": "num-to-korean",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Function to write numbers in Korean",
   "repository": "https://github.com/huskyhoochu/num-to-korean.git",
   "author": "huskyhoochu <dfg1499@gmail.com> (https://www.huskyhoochu.com)",

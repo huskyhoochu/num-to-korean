@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2020.05.01 - v0.2.1
+
+- Webpack에서 Rollup으로 번들러 변경
+- cjs, umd 파일 및 min 파일로 세분화
+- unpkg, jsdelivr 등 CDN 지원용 파일 명시
+- banner comment 부착
+
 ## 2020.04.29 - v0.2.0
 
 - 만 단위 띄어쓰기 구현 ([#6](https://github.com/huskyhoochu/num-to-korean/issues/6))
