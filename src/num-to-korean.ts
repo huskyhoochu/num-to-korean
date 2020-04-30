@@ -14,10 +14,10 @@ export enum FormatOptions {
 
 /**
  * Converts a number to Korean notation.
- * @param num A number to convert into Korean notation.
- * @param formatOptions A string to select a format.
+ * @param {number} num A number to convert into Korean notation.
+ * @param {string} [formatOptions] A string to select a format.
  */
-export function numToKorean(num: number, formatOptions?: FormatOptions | string): string {
+export function numToKorean(num: number, formatOptions?: string): string {
   const options = formatOptions || '';
 
   // 예외 값 처리
