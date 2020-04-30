@@ -11,7 +11,7 @@ const banner = `/** @license num-to-korean v${pkg.version}\n`
   + '*/\n';
 
 module.exports = {
-  input: 'src/index.ts',
+  input: 'src/num-to-korean.ts',
   output: [
     {
       file: 'dist/num-to-korean.js',
