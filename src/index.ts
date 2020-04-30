@@ -1,4 +1,4 @@
-import { splitEvery, flatten } from './utils';
+import { splitEvery } from './utils';
 
 // 한글로 바꿀 숫자 배열
 const textSymbol = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
@@ -7,10 +7,17 @@ const powerSymbol = ['', '십', '백', '천'];
 // 4자리마다 커지는 단위수 배열
 const dotSymbol = ['', '만', '억', '조', '경'];
 
-export function numToKorean(num: number): string {
-  if (Number.isNaN(num)) {
+export enum FormatOptions {
+  SPACING = 'spacing',
+}
+
+export function numToKorean(num: number, formatOptions?: FormatOptions | string): string {
+  // 예외 값 처리
+  if (!Number.isInteger(num)) {
     return '';
   }
+
+  const options = formatOptions || '';
 
   // 숫자를 한글 배열로 변환
   const koreanArr = num
@@ -33,5 +40,20 @@ export function numToKorean(num: number): string {
   const removeUnusedDot = splitEvery(4, koreanArr)
     .filter((slicedByDot: string[]) => !dotSymbol.includes(slicedByDot.join('')));
 
-  return flatten(removeUnusedDot).reverse().join('');
+  // 문자열 변환
+  const result = removeUnusedDot
+    .reduce((acc, val) => acc.concat(val), [])
+    .reverse()
+    .filter((token: string) => token)
+    .map((token: string) => {
+      if (options === FormatOptions.SPACING && dotSymbol.includes(token.slice(-1))) {
+        return `${token} `;
+      }
+
+      return token;
+    })
+    .join('')
+    .trim();
+
+  return result;
 }
