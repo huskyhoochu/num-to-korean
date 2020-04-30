@@ -1,7 +1,7 @@
 import { numToKorean, FormatOptions } from '../src/num-to-korean';
 
-describe('혼합 표기 테스트 (쉼표 없음)', () => {
-  test('백 단위 이하 테스트', () => {
+describe('혼합 표기 테스트', () => {
+  test('천 단위 이하 테스트', () => {
     const answers = [
       {
         korean: '0',
@@ -19,6 +19,10 @@ describe('혼합 표기 테스트 (쉼표 없음)', () => {
         korean: '287',
         num: 287,
       },
+      {
+        korean: '4,862',
+        num: 4862,
+      }
     ];
 
     answers.forEach((answer) => {
@@ -40,6 +44,10 @@ describe('혼합 표기 테스트 (쉼표 없음)', () => {
         korean: '602만 702',
         num: 6_020_702,
       },
+      {
+        korean: '3,086만 4,627',
+        num: 30_864_627,
+      }
     ];
 
     answers.forEach((answer) => {
@@ -61,7 +69,11 @@ describe('혼합 표기 테스트 (쉼표 없음)', () => {
       {
         korean: '698억 30만 270',
         num: 69_800_300_270,
-      }
+      },
+      {
+        korean: '9,274억 8,304만 1,001',
+        num: 927_483_041_001,
+      },
     ];
 
     answers.forEach((answer) => {

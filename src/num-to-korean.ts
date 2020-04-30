@@ -55,7 +55,13 @@ export function numToKorean(num: number, formatOptions?: FormatOptions | string)
   const removeUnused = splitEvery(4, koreanArr)
     .map((slicedByDot: string[]) => {
       if (options === FormatOptions.MIXED) {
-        return dropLastWhile((x: string) => parseInt(x, 10) === 0, slicedByDot);
+        const droppedZero = dropLastWhile((x: string) => parseInt(x, 10) === 0, slicedByDot);
+
+        if (droppedZero.length === 4) {
+          droppedZero.splice(3, 0, ',');
+        }
+
+        return droppedZero;
       }
 
       return dotSymbol.includes(slicedByDot.join('')) ? [] : slicedByDot;
