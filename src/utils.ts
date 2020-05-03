@@ -8,3 +8,13 @@ export function splitEvery<T>(n: number, arr: Array<T>): Array<Array<T>> {
 
   return result;
 }
+
+export function dropLastWhile<T>(pred: (x: T) => boolean, arr: Array<T>): Array<T> {
+  let index = arr.length -1;
+
+  while(index >= 0 && pred(arr[index])) {
+    index -= 1;
+  }
+
+  return arr.slice(0, index + 1);
+}

@@ -1,6 +1,6 @@
 # :kr: NumToKorean
 
-[![Build Status](https://travis-ci.org/huskyhoochu/num-to-korean.svg?branch=master)](https://travis-ci.org/huskyhoochu/num-to-korean)
+[![Build Status](https://travis-ci.org/huskyhoochu/num-to-korean.svg?branch=master)](https://travis-ci.org/huskyhoochu/num-to-korean) [![](https://data.jsdelivr.com/v1/package/npm/num-to-korean/badge?style=rounded)](https://www.jsdelivr.com/package/npm/num-to-korean)
 
 > 숫자를 한글 표기로 변환해주는 함수
 
@@ -20,6 +20,12 @@ npm install num-to-korean
 
 // yarn
 yarn add num-to-korean
+
+// jsdelivr
+<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.3.0/dist/num-to-korean.min.js"></script>
+
+// unpkg
+<script src="https://unpkg.com/num-to-korean@0.3.0/dist/num-to-korean.min.js"></script>
 ```
 
 ## Usage
@@ -44,13 +50,6 @@ const number = numToKorean(12345678);
 
 ```
 // Browser
-
-// jsdelivr
-<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.2.1/dist/num-to-korean.min.js"></script>
-
-// unpkg
-<script src="https://unpkg.com/num-to-korean@0.2.1/dist/num-to-korean.min.js"></script>
-
 <script>
   var num = document.getElementById('num').innerText;
   document.getElementById('korean').innerText = numToKorean.numToKorean(parseInt(num, 10));
@@ -73,6 +72,20 @@ const spacing = numToKorean(5677746724, FormatOptions.SPACING);
 ```
 const spacing = numToKorean(24234224, 'spacing');
 // -> 이천사백이십삼만 사천이백이십사
+```
+
+### Mixed: 숫자-단위 병기
+
+mixed 옵션을 사용하면 숫자는 기존의 숫자를, 단위수는 한글로 표현할 수 있습니다. 천 단위 쉼표 또한 자동으로 포함됩니다.
+
+```
+import { numToKorean, FormatOptions } from 'num-to-korean';
+
+numToKorean(30864627, FormatOptions.MIXED);
+// -> 3,086만 4,627
+
+numTokorean(927483041001, 'mixed'); // 문자열 'mixed' 입력 가능
+// -> 9,274억 8,304만 1,001
 ```
 
 ## Test
