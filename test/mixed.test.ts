@@ -79,5 +79,30 @@ describe('혼합 표기 테스트', () => {
     answers.forEach((answer) => {
       expect(numToKorean(answer.num, FormatOptions.MIXED)).toBe(answer.korean);
     });
-  })
+  });
+
+  test('조 단위 테스트', () => {
+    const answers = [
+      {
+        korean: '7조 50만',
+        num: 7_000_000_500_000,
+      },
+      {
+        korean: '65조 290억 9,800만 1,000',
+        num: 65_029_098_001_000,
+      },
+      {
+        korean: '982조 178억 3,723만 9,001',
+        num: 982_017_837_239_001,
+      },
+      {
+        korean: '1,293조 9,092억 9,464만 5,000',
+        num: 1_293_909_294_645_000,
+      },
+    ];
+
+    answers.forEach((answer) => {
+      expect(numToKorean(answer.num, FormatOptions.MIXED)).toBe(answer.korean);
+    });
+  });
 });

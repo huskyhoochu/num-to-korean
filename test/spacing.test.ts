@@ -51,8 +51,37 @@ describe('띄어쓰기 결과물 테스트', () => {
     });
   });
 
+  test('조 단위 테스트', () => {
+    const answers = [
+      {
+        korean: '사조 팔십오억 이천일만 구십사',
+        num: 4_008_520_010_094,
+      },
+      {
+        korean: '구십육조 구천팔백이십오억 칠천삼백구십만 삼백칠십',
+        num: 96_982_573_900_370,
+      },
+      {
+        korean: '사백조 일천만 삼',
+        num: 400_000_010_000_003,
+      },
+      {
+        korean: '삼천구백구십사조 일백구억 이천칠십오만 삼천삼십',
+        num: 3_994_010_920_753_030,
+      },
+    ];
+
+    answers.forEach((answer) => {
+      expect(numToKorean(answer.num, 'spacing')).toBe(answer.korean);
+    });
+  })
+
   test('단위로 끝나는 숫자는 띄어쓰기가 생략되어야 함', () => {
     const answers = [
+      {
+        korean: '삼십일만',
+        num: 310_000,
+      },
       {
         korean: '이억',
         num: 200_000_000,
