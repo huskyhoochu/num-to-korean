@@ -73,7 +73,11 @@ export function numToKorean(num: number, formatOptions?: string): string {
     .reverse()
     .filter((token: string) => token)
     .map((token: string) => {
-      if (options && dotSymbol.includes(token.slice(-1))) {
+      if (
+        (options === FormatOptions.SPACING ||
+          options === FormatOptions.MIXED) &&
+        dotSymbol.includes(token.slice(-1))
+      ) {
         return `${token} `;
       }
 
