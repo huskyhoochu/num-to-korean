@@ -1,4 +1,4 @@
-import { splitEvery, dropLastWhile } from './utils';
+import { dropLastWhile, splitEvery } from './utils';
 
 // 한글로 바꿀 숫자 배열
 const textSymbol = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
@@ -7,31 +7,10 @@ const powerSymbol = ['', '십', '백', '천'];
 // 4자리마다 커지는 단위수 배열
 const dotSymbol = ['', '만', '억', '조', '경'];
 
-export enum FormatOptions {
-  SPACING = 'spacing',
-  MIXED = 'mixed',
-}
+const validate = (num: number): number => (Number.isInteger(num) ? num : 0);
 
-/**
- * Converts a number to Korean notation.
- * @param {number} num A number to convert into Korean notation.
- * @param {string} [formatOptions] A string to select a format.
- */
-export function numToKorean(num: number, formatOptions?: string): string {
-  const options = formatOptions || '';
-
-  // 예외 값 처리
-  if (!Number.isInteger(num)) {
-    return '';
-  }
-
-  // MIXED 옵션에서는 0을 '0'으로 표기
-  if (num === 0 && options === FormatOptions.MIXED) {
-    return '0';
-  }
-
-  // 숫자를 한글 배열로 변환
-  const koreanArr = num
+const getAtomic = (num: number): (string | number)[][] =>
+  num
     .toString()
     .split('')
     .map((numText: string) => parseInt(numText, 10))
@@ -40,51 +19,92 @@ export function numToKorean(num: number, formatOptions?: string): string {
       const powerIndex = index % 4;
       const dotIndex = Math.ceil(index / 4);
 
-      const text = textSymbol[item];
       const power = item === 0 ? '' : powerSymbol[powerIndex];
       const dot = powerIndex === 0 ? dotSymbol[dotIndex] : '';
 
-      if (options === FormatOptions.MIXED) {
-        return `${item}${dot}`;
-      }
-
-      return `${text}${power}${dot}`;
+      return [item, power, dot];
     });
 
-  // 불필요하게 첨가된 단위 제거
-  const removeUnused = splitEvery(4, koreanArr)
-    .map((slicedByDot: string[]) => {
-      if (options === FormatOptions.MIXED) {
-        const droppedZero = dropLastWhile((x: string) => parseInt(x, 10) === 0, slicedByDot);
+const reduceAtomic = (atomic: (string | number)[][]): string[] => {
+  const reduce = atomic.map((item) => {
+    const newItem = [...item];
+    newItem[0] = textSymbol[newItem[0] as number] || '';
+    return newItem.join('');
+  });
 
-        if (droppedZero.length === 4) {
-          droppedZero.splice(3, 0, ',');
-        }
-
-        return droppedZero;
-      }
-
-      return dotSymbol.includes(slicedByDot.join('')) ? [] : slicedByDot;
-    });
-
-  // 문자열 변환
-  const result = removeUnused
+  return splitEvery(4, reduce)
+    .map((item) => (dotSymbol.includes(item.join('')) ? [] : item))
     .reduce((acc: string[], val: string[]) => acc.concat(val), [])
-    .reverse()
-    .filter((token: string) => token)
+    .reverse();
+};
+
+const addSpacing = (reduced: string[]): string =>
+  reduced.filter((token: string) => token)
     .map((token: string) => {
-      if (
-        (options === FormatOptions.SPACING ||
-          options === FormatOptions.MIXED) &&
-        dotSymbol.includes(token.slice(-1))
-      ) {
+      if (dotSymbol.includes(token.slice(-1))) {
         return `${token} `;
       }
-
       return token;
     })
     .join('')
     .trim();
 
-  return result;
+const getNormal = (num: number): string =>
+  reduceAtomic(getAtomic(validate(num))).join('');
+
+const getSpacing = (num: number): string =>
+  addSpacing(reduceAtomic(getAtomic(validate(num))));
+
+const getMixed = (num: number): string => {
+  const mixedAtomic = getAtomic(validate(num)).map(
+    (item) => `${item[0]}${item[2]}`
+  );
+  const reduced = splitEvery(4, mixedAtomic)
+    .map((item) => {
+      const droppedZero = dropLastWhile(
+        (x: string) => parseInt(x, 10) === 0,
+        item
+      );
+
+      if (droppedZero.length === 4) {
+        droppedZero.splice(3, 0, ',');
+      }
+
+      return droppedZero;
+    })
+    .reduce((acc: string[], val: string[]) => acc.concat(val), [])
+    .reverse();
+
+  const result = addSpacing(reduced);
+  return result === '' ? '0' : result;
+};
+
+const SPACING = 'spacing';
+const MIXED = 'mixed';
+
+type formatOptions = typeof SPACING | typeof MIXED;
+
+export const FormatOptions: {
+  SPACING: formatOptions;
+  MIXED: formatOptions;
+} = {
+  SPACING,
+  MIXED,
+};
+
+/**
+ * Converts a number to Korean notation.
+ * @param num A number to convert into Korean notation.
+ * @param format A string to select a format.
+ */
+export function numToKorean(num: number, format?: formatOptions): string {
+  if (format === FormatOptions.SPACING) {
+    return getSpacing(num);
+  }
+
+  if (format === FormatOptions.MIXED) {
+    return getMixed(num);
+  }
+
+  return getNormal(num);
 }
