@@ -25,7 +25,7 @@ const getAtomic = (num: number): (string | number)[][] =>
       return [item, power, dot];
     });
 
-const reduceAtomic = (atomic: (string | number)[][]) => {
+const reduceAtomic = (atomic: (string | number)[][]): string[] => {
   const reduce = atomic.map((item) => {
     const newItem = [...item];
     newItem[0] = textSymbol[newItem[0] as number] || '';
@@ -38,12 +38,8 @@ const reduceAtomic = (atomic: (string | number)[][]) => {
     .reverse();
 };
 
-const getNormal = (num: number): string =>
-  reduceAtomic(getAtomic(validate(num))).join('');
-
-const getSpacing = (num: number): string =>
-  reduceAtomic(getAtomic(validate(num)))
-    .filter((token: string) => token)
+const addSpacing = (reduced: string[]): string =>
+  reduced.filter((token: string) => token)
     .map((token: string) => {
       if (dotSymbol.includes(token.slice(-1))) {
         return `${token} `;
@@ -53,11 +49,17 @@ const getSpacing = (num: number): string =>
     .join('')
     .trim();
 
+const getNormal = (num: number): string =>
+  reduceAtomic(getAtomic(validate(num))).join('');
+
+const getSpacing = (num: number): string =>
+  addSpacing(reduceAtomic(getAtomic(validate(num))));
+
 const getMixed = (num: number): string => {
   const mixedAtomic = getAtomic(validate(num)).map(
     (item) => `${item[0]}${item[2]}`
   );
-  const result = splitEvery(4, mixedAtomic)
+  const reduced = splitEvery(4, mixedAtomic)
     .map((item) => {
       const droppedZero = dropLastWhile(
         (x: string) => parseInt(x, 10) === 0,
@@ -71,16 +73,9 @@ const getMixed = (num: number): string => {
       return droppedZero;
     })
     .reduce((acc: string[], val: string[]) => acc.concat(val), [])
-    .reverse()
-    .map((token: string) => {
-      if (dotSymbol.includes(token.slice(-1))) {
-        return `${token} `;
-      }
-      return token;
-    })
-    .join('')
-    .trim();
+    .reverse();
 
+  const result = addSpacing(reduced);
   return result === '' ? '0' : result;
 };
 
