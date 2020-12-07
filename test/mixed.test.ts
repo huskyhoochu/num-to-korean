@@ -1,6 +1,27 @@
-import { numToKorean, FormatOptions } from '../src/num-to-korean';
+import { numToKorean, FormatOptions } from '../src/new-num-to-korean';
 
 describe('혼합 표기 테스트', () => {
+  test('예외 값 처리', () => {
+    const answers = [
+      {
+        korean: '0',
+        num: 0,
+      },
+      {
+        korean: '0',
+        num: NaN,
+      },
+      {
+        korean: '0',
+        num: Infinity,
+      },
+    ];
+
+    answers.forEach((answer) => {
+      expect(numToKorean(answer.num, FormatOptions.MIXED)).toBe(answer.korean);
+    });
+  });
+
   test('천 단위 이하 테스트', () => {
     const answers = [
       {
