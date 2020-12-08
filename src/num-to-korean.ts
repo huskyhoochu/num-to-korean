@@ -79,30 +79,22 @@ const getMixed = (num: number): string => {
   return result === '' ? '0' : result;
 };
 
-const SPACING = 'spacing';
-const MIXED = 'mixed';
-
-type formatOptions = typeof SPACING | typeof MIXED;
-
-export const FormatOptions: {
-  SPACING: formatOptions;
-  MIXED: formatOptions;
-} = {
-  SPACING,
-  MIXED,
+export const FormatOptions = {
+  SPACING: 'spacing',
+  MIXED: 'mixed',
 };
 
 /**
  * Converts a number to Korean notation.
  * @param num A number to convert into Korean notation.
- * @param format A string to select a format.
+ * @param formatOptions A string to select a format.
  */
-export function numToKorean(num: number, format?: formatOptions): string {
-  if (format === FormatOptions.SPACING) {
+export function numToKorean(num: number, formatOptions?: string): string {
+  if (formatOptions === FormatOptions.SPACING) {
     return getSpacing(num);
   }
 
-  if (format === FormatOptions.MIXED) {
+  if (formatOptions === FormatOptions.MIXED) {
     return getMixed(num);
   }
 
