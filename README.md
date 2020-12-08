@@ -10,7 +10,12 @@ NumToKorean은 숫자를 한글 표기로 변환해주는 함수입니다. 간�
 
 소개 페이지: [금액-한글 변환 프로젝트 npm 배포하기 | Huskyhoochu 기술 블로그](https://www.huskyhoochu.com/num-to-korean/)
 
-:warning:**본 프로젝트는 IE를 지원하지 않습니다. 호환성을 유지하고자 한다먼 직접 polyfill을 설치할 것을 권장합니다.**
+:warning: **본 프로젝트는 IE를 지원하지 않습니다. 호환성을 유지하고자 한다먼 직접 polyfill을 설치할 것을 권장합니다.**
+
+## v0.4.0 Change
+
+- 함수 설계를 변경했습니다. 한 덩어리였던 함수를 기능 별로 세분화했습니다.
+- 'MIXED' 모드에서 잘못된 값 및 0은 모두 '0'을 출력합니다.
 
 ## Installation
 
@@ -22,10 +27,10 @@ npm install num-to-korean
 yarn add num-to-korean
 
 // jsdelivr
-<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.3.0/dist/num-to-korean.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.4.0/dist/num-to-korean.min.js"></script>
 
 // unpkg
-<script src="https://unpkg.com/num-to-korean@0.3.0/dist/num-to-korean.min.js"></script>
+<script src="https://unpkg.com/num-to-korean@0.4.0/dist/num-to-korean.min.js"></script>
 ```
 
 ## Usage
@@ -67,7 +72,7 @@ const spacing = numToKorean(5677746724, FormatOptions.SPACING);
 // -> 오십육억 칠천칠백칠십사만 육천칠백이십사
 ```
 
-`FormatOptions`는 `enum` 값이므로 반드시 직접 import할 필요 없이 `spacing` 문자열만 입력해도 관계 없습니다.
+`FormatOptions`는 반드시 직접 import할 필요 없이 `spacing` 문자열만 입력해도 관계 없습니다.
 
 ```
 const spacing = numToKorean(24234224, 'spacing');
