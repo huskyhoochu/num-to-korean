@@ -10,7 +10,9 @@ NumToKorean은 숫자를 한글 표기로 변환해주는 함수입니다. 간�
 
 소개 페이지: [금액-한글 변환 프로젝트 npm 배포하기 | Huskyhoochu 기술 블로그](https://www.huskyhoochu.com/num-to-korean/)
 
-:warning: **본 프로젝트는 IE를 지원하지 않습니다. 호환성을 유지하고자 한다먼 직접 polyfill을 설치할 것을 권장합니다.**
+## v0.4.1 Change
+
+- :tada: NumToKorean이 드디어 IE 11, 10, 9를 지원합니다. 
 
 ## v0.4.0 Change
 
@@ -27,10 +29,10 @@ npm install num-to-korean
 yarn add num-to-korean
 
 // jsdelivr
-<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.4.0/dist/num-to-korean.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.4.1/dist/num-to-korean.min.js"></script>
 
 // unpkg
-<script src="https://unpkg.com/num-to-korean@0.4.0/dist/num-to-korean.min.js"></script>
+<script src="https://unpkg.com/num-to-korean@0.4.1/dist/num-to-korean.min.js"></script>
 ```
 
 ## Usage

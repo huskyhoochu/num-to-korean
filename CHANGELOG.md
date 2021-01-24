@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2021.01.24 - v0.4.1
+
+- IE 지원을 위한 폴리필 적용
+- Number.isInteger 함수를 폴리필로 변경
+- Array.includes 함수를 indexOf로 변경
+
 ## 2020.12.08 - v0.4.0
 
 - 한 덩어리였던 함수를 단위 기능 별로 분리
