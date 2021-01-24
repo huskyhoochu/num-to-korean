@@ -94,6 +94,9 @@ const getLingual = (num: number): string =>
 const getSpacing = (num: number): string =>
   addSpacing(reduceAtomic(getAtomic(validate(num))));
 
+const getLingualSpacing = (num: number): string =>
+  addSpacing(removeOneStr(reduceAtomic(getAtomic(validate(num)))));
+
 const getMixed = (num: number): string => {
   const mixedAtomic = getAtomic(validate(num)).map(
     (item) => `${item[0]}${item[2]}`
@@ -119,9 +122,10 @@ const getMixed = (num: number): string => {
 };
 
 export const FormatOptions = {
-  SPACING: 'spacing',
-  MIXED: 'mixed',
-  LINGUAL: 'lingual',
+  SPACING: 'spacing', // 띄어쓰기
+  MIXED: 'mixed', // 한글 숫자 병기
+  LINGUAL: 'lingual', // 구어체
+  LINGUAL_SPACING: 'lingual_spacing', // 구어체 띄어쓰기
 };
 
 /**
@@ -140,6 +144,10 @@ export function numToKorean(num: number, formatOptions?: string): string {
 
   if (formatOptions === FormatOptions.LINGUAL) {
     return getLingual(num);
+  }
+
+  if (formatOptions === FormatOptions.LINGUAL_SPACING) {
+    return getLingualSpacing(num);
   }
 
   return getNormal(num);
