@@ -7,7 +7,10 @@ const powerSymbol = ['', '십', '백', '천'];
 // 4자리마다 커지는 단위수 배열
 const dotSymbol = ['', '만', '억', '조', '경'];
 
-const validate = (num: number): number => (Number.isInteger(num) ? num : 0);
+// eslint-disable-next-line no-restricted-globals
+const isInteger = (num: number): boolean => isFinite(num) && Math.floor(num) === num;
+
+const validate = (num: number): number => (isInteger(num) ? num : 0);
 
 const getAtomic = (num: number): (string | number)[][] =>
   num
@@ -33,7 +36,7 @@ const reduceAtomic = (atomic: (string | number)[][]): string[] => {
   });
 
   return splitEvery(4, reduce)
-    .map((item) => (dotSymbol.includes(item.join('')) ? [] : item))
+    .map((item) => (dotSymbol.indexOf(item.join('')) >= 0 ? [] : item))
     .reduce((acc: string[], val: string[]) => acc.concat(val), [])
     .reverse();
 };
@@ -41,7 +44,7 @@ const reduceAtomic = (atomic: (string | number)[][]): string[] => {
 const addSpacing = (reduced: string[]): string =>
   reduced.filter((token: string) => token)
     .map((token: string) => {
-      if (dotSymbol.includes(token.slice(-1))) {
+      if (dotSymbol.indexOf(token.slice(-1)) >= 0) {
         return `${token} `;
       }
       return token;
