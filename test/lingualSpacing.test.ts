@@ -87,4 +87,49 @@ describe('구어체 테스트', () => {
       expect(numToKorean(answer.num, FormatOptions.LINGUAL_SPACING)).toBe(answer.korean);
     });
   });
+
+  test("십만자리 이상부터 0으로만 채워진 숫자", () => {
+    const answers = [
+      {
+        korean: '십만',
+        num: 100_000,
+      },
+      {
+        korean: '백만',
+        num: 1_000_000,
+      },
+      {
+        korean: '천만',
+        num: 10_000_000,
+      },
+      {
+        korean: '일억',
+        num: 100_000_000,
+      },
+      {
+        korean: '십억',
+        num: 1_000_000_000,
+      },
+      {
+        korean: '백억',
+        num: 10_000_000_000,
+      },
+      {
+        korean: '천억',
+        num: 100_000_000_000,
+      },
+      {
+        korean: '일조',
+        num: 1_000_000_000_000,
+      },
+      {
+        korean: '십조',
+        num: 10_000_000_000_000,
+      },
+    ];
+
+    answers.forEach((answer) => {
+      expect(numToKorean(answer.num, FormatOptions.LINGUAL)).toBe(answer.korean);
+    });
+  });
 });

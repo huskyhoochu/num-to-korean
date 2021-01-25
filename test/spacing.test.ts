@@ -15,6 +15,35 @@ describe('띄어쓰기 결과물 테스트', () => {
         korean: '',
         num: Infinity,
       },
+      {
+        korean: '',
+        num: -Infinity,
+      },
+    ];
+
+    answers.forEach((answer) => {
+      expect(numToKorean(answer.num, FormatOptions.SPACING)).toBe(answer.korean);
+    });
+  });
+
+  test('천 단위 이하 테스트', () => {
+    const answers = [
+      {
+        korean: '사',
+        num: 4,
+      },
+      {
+        korean: '오십팔',
+        num: 58,
+      },
+      {
+        korean: '일백이',
+        num: 102,
+      },
+      {
+        korean: '육천팔백일십',
+        num: 6810,
+      },
     ];
 
     answers.forEach((answer) => {

@@ -15,6 +15,10 @@ describe('혼합 표기 테스트', () => {
         korean: '0',
         num: Infinity,
       },
+      {
+        korean: '0',
+        num: -Infinity,
+      }
     ];
 
     answers.forEach((answer) => {
