@@ -15,6 +15,10 @@ describe('숫자 금액을 한글로 변환하기 테스트', () => {
         korean: '',
         num: Infinity,
       },
+      {
+        korean: '',
+        num: -Infinity,
+      },
     ];
 
     answers.forEach((answer) => {

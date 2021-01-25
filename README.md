@@ -10,20 +10,29 @@ NumToKorean은 숫자를 한글 표기로 변환해주는 함수입니다. 간�
 
 소개 페이지: [금액-한글 변환 프로젝트 npm 배포하기 | Huskyhoochu 기술 블로그](https://www.huskyhoochu.com/num-to-korean/)
 
+## Roadmap
+
+- 음수 표기 대응 (-12,345 -> 마이너스 일만이천삼백사십오)
+
+## v0.4.2 Change
+
+- 구어체 및 구어체 띄어쓰기 기능을 추가했습니다. 구어체란 1,201 같은 숫자를 "일천이백일" 처럼 직역하는 것이 아니라 "천이백일"처럼 우리가 일상생활에서 편하게 쓰는 말로 번역해주는 기능을 말합니다. 구어체 띄어쓰기는 기존 띄어쓰기처럼 만 단위에서 띄어쓰는 기능을 말합니다.
+
+#### 구어체 규칙
+
+1. 일의자리의 "일"은 생략되어선 안 된다. (1 -> "일")
+2. 십의자리부터 만의자리까지 일의자리를 제외한 "일"은 생략된다. (11,111 -> "만천백십일")
+3. 십만자리 이상일 떄 만, 억, 조 단위의 "일"은 생략되어선 안 된다. (111,111,111,111 -> "천백십일억천백십일만천백십일")
+
 ## v0.4.1 Change
 
-- :tada: NumToKorean이 드디어 IE 11, 10, 9를 지원합니다. 
-
-## v0.4.0 Change
-
-- 함수 설계를 변경했습니다. 한 덩어리였던 함수를 기능 별로 세분화했습니다.
-- 'MIXED' 모드에서 잘못된 값 및 0은 모두 '0'을 출력합니다.
+- :tada: NumToKorean이 드디어 IE 11, 10, 9를 지원합니다.
 
 ## Installation
 
 ```
 // npm
-npm install num-to-korean
+npm install --save num-to-korean
 
 // yarn
 yarn add num-to-korean
@@ -40,7 +49,7 @@ yarn add num-to-korean
 ### Basic: 기본 변환
 
 ```
-// ES5
+// Require
 const { numToKorean } = require('num-to-korean');
 
 const billion = numToKorean(100000000);
@@ -48,7 +57,7 @@ const billion = numToKorean(100000000);
 ```
 
 ```
-// After ES6
+// Import
 import { numToKorean } from 'num-to-korean';
 
 const number = numToKorean(12345678);
@@ -93,6 +102,34 @@ numToKorean(30864627, FormatOptions.MIXED);
 
 numTokorean(927483041001, 'mixed'); // 문자열 'mixed' 입력 가능
 // -> 9,274억 8,304만 1,001
+```
+
+### Lingual: 구어체
+
+lingual 옵션을 사용하면 우리가 일상생활에서 쓰는 구어체 형태로 표현할 수 있습니다.
+
+```
+import { numToKorean, FormatOptions } from 'num-to-korean';
+
+numToKorean(112231, FormatOptions.LINGUAL);
+// -> 십일만이천이백삼십일
+
+numToKorean(1111, 'lingual');
+// -> 천백십일
+```
+
+### Lingual Spacing: 구어체 띄어쓰기
+
+구어체 모드와 띄어쓰기 모드가 혼합된 경우입니다.
+
+```
+import { numToKorean, FormatOptions } from 'num-to-korean';
+
+numToKorean(1241353, FormatOptions.LINGUAL_SPACING);
+// -> 백이십사만 천삼백오십삼
+
+numToKorean(182418101, 'lingual_spacing');
+// -> 일억 팔천이백사십일만 팔천백일
 ```
 
 ## Test

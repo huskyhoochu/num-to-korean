@@ -36,7 +36,7 @@ const reduceAtomic = (atomic: (string | number)[][]): string[] => {
   });
 
   return splitEvery(4, reduce)
-    .map((item) => (dotSymbol.indexOf(item.join('')) >= 0 ? [] : item))
+    .map((item) => (dotSymbol.indexOf(item.join('')) > 0 ? ['', '', '', ''] : item))
     .reduce((acc: string[], val: string[]) => acc.concat(val), [])
     .reverse();
 };
@@ -44,7 +44,7 @@ const reduceAtomic = (atomic: (string | number)[][]): string[] => {
 const addSpacing = (reduced: string[]): string =>
   reduced.filter((token: string) => token)
     .map((token: string) => {
-      if (dotSymbol.indexOf(token.slice(-1)) >= 0) {
+      if (dotSymbol.indexOf(token.slice(-1)) > 0) {
         return `${token} `;
       }
       return token;
@@ -52,11 +52,50 @@ const addSpacing = (reduced: string[]): string =>
     .join('')
     .trim();
 
+const removeOneStr = (list: string[]): string[] => {
+  if (list.length === 1) {
+    return list;
+  }
+
+  const filtered: string[] = [];
+
+  for (let i = 0; i < list.length; i += 1) {
+    // 일의자리의 "일"은 생략되어선 안 된다
+    if (i === list.length - 1) {
+      filtered.push(list[i]);
+      break;
+    }
+
+    // 십만자리 이상일 때 만, 억, 조 단위의 "일"은 생략되어선 안 된다
+    // 다만 만의자리일 때 만의자리의 "일"은 생략되어야 한다
+    if (list.length > 5 && dotSymbol.indexOf(list[i].slice(1)) > 0) {
+      filtered.push(list[i]);
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+
+    // 그 외의 "일"은 생략된다
+    if (list[i].slice(0, 1) === textSymbol[1]) {
+      filtered.push(list[i].slice(1));
+    } else {
+      filtered.push(list[i]);
+    }
+  }
+
+  return filtered;
+}
+
 const getNormal = (num: number): string =>
   reduceAtomic(getAtomic(validate(num))).join('');
 
+const getLingual = (num: number): string =>
+  removeOneStr(reduceAtomic(getAtomic(validate(num)))).join('');
+
 const getSpacing = (num: number): string =>
   addSpacing(reduceAtomic(getAtomic(validate(num))));
+
+const getLingualSpacing = (num: number): string =>
+  addSpacing(removeOneStr(reduceAtomic(getAtomic(validate(num)))));
 
 const getMixed = (num: number): string => {
   const mixedAtomic = getAtomic(validate(num)).map(
@@ -83,8 +122,10 @@ const getMixed = (num: number): string => {
 };
 
 export const FormatOptions = {
-  SPACING: 'spacing',
-  MIXED: 'mixed',
+  SPACING: 'spacing', // 띄어쓰기
+  MIXED: 'mixed', // 한글 숫자 병기
+  LINGUAL: 'lingual', // 구어체
+  LINGUAL_SPACING: 'lingual_spacing', // 구어체 띄어쓰기
 };
 
 /**
@@ -99,6 +140,14 @@ export function numToKorean(num: number, formatOptions?: string): string {
 
   if (formatOptions === FormatOptions.MIXED) {
     return getMixed(num);
+  }
+
+  if (formatOptions === FormatOptions.LINGUAL) {
+    return getLingual(num);
+  }
+
+  if (formatOptions === FormatOptions.LINGUAL_SPACING) {
+    return getLingualSpacing(num);
   }
 
   return getNormal(num);
