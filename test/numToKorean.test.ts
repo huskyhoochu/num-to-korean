@@ -1,4 +1,4 @@
-import { numToKorean } from '../src/num-to-korean';
+import { numToKorean, FormatOptions } from '../src/numToKorean';
 
 describe('숫자 금액을 한글로 변환하기 테스트', () => {
   test('예외 값 처리', () => {
@@ -53,6 +53,14 @@ describe('숫자 금액을 한글로 변환하기 테스트', () => {
       num: 1234567898,
     };
     expect(numToKorean(answer.num)).toBe(answer.korean);
+  });
+
+  test('모든 자릿수가 숫자로 찼을 때: NORMAL 옵션', () => {
+    const answer = {
+      korean: '일십이억삼천사백오십육만칠천팔백구십팔',
+      num: 1234567898,
+    };
+    expect(numToKorean(answer.num, FormatOptions.NORMAL)).toBe(answer.korean);
   });
 
   test('모든 자릿수가 0일 때', () => {

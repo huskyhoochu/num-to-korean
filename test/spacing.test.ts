@@ -1,4 +1,4 @@
-import { numToKorean, FormatOptions } from '../src/num-to-korean';
+import { numToKorean, FormatOptions } from '../src/numToKorean';
 
 describe('띄어쓰기 결과물 테스트', () => {
   test('예외 값 처리', () => {
