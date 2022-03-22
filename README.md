@@ -14,6 +14,10 @@ NumToKorean은 숫자를 한글 표기로 변환해주는 함수입니다. 간�
 
 - 음수 표기 대응 (-12,345 -> 마이너스 일만이천삼백사십오)
 
+## v0.5.0 Change
+
+- 코드 가독성을 좋게 하고 유지보수를 쉽게 하기 위해 객체지향 프로그래밍으로 재설계했습니다. 핵심 로직은 변하지 않았습니다.
+
 ## v0.4.2 Change
 
 - 구어체 및 구어체 띄어쓰기 기능을 추가했습니다. 구어체란 1,201 같은 숫자를 "일천이백일" 처럼 직역하는 것이 아니라 "천이백일"처럼 우리가 일상생활에서 편하게 쓰는 말로 번역해주는 기능을 말합니다. 구어체 띄어쓰기는 기존 띄어쓰기처럼 만 단위에서 띄어쓰는 기능을 말합니다.
@@ -38,10 +42,10 @@ npm install --save num-to-korean
 yarn add num-to-korean
 
 // jsdelivr
-<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.4.2/dist/num-to-korean.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.5.0/dist/num-to-korean.min.js"></script>
 
 // unpkg
-<script src="https://unpkg.com/num-to-korean@0.4.2/dist/num-to-korean.min.js"></script>
+<script src="https://unpkg.com/num-to-korean@0.5.0/dist/num-to-korean.min.js"></script>
 ```
 
 ## Usage
