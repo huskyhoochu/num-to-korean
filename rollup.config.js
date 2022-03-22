@@ -1,6 +1,7 @@
 const typescript = require('rollup-plugin-typescript2');
 const { terser } = require('rollup-plugin-terser');
 
+// eslint-disable-next-line import/extensions
 const pkg = require('./package.json');
 
 const banner =
@@ -12,7 +13,7 @@ const banner =
   '*/\n';
 
 module.exports = {
-  input: 'src/num-to-korean.ts',
+  input: 'src/numToKorean.ts',
   output: [
     {
       file: 'dist/num-to-korean.js',

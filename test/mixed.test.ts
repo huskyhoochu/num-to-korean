@@ -1,4 +1,4 @@
-import { numToKorean, FormatOptions } from '../src/num-to-korean';
+import { numToKorean, FormatOptions } from '../src/numToKorean';
 
 describe('혼합 표기 테스트', () => {
   test('예외 값 처리', () => {
@@ -18,7 +18,7 @@ describe('혼합 표기 테스트', () => {
       {
         korean: '0',
         num: -Infinity,
-      }
+      },
     ];
 
     answers.forEach((answer) => {
@@ -47,7 +47,7 @@ describe('혼합 표기 테스트', () => {
       {
         korean: '4,862',
         num: 4862,
-      }
+      },
     ];
 
     answers.forEach((answer) => {
@@ -72,14 +72,13 @@ describe('혼합 표기 테스트', () => {
       {
         korean: '3,086만 4,627',
         num: 30_864_627,
-      }
+      },
     ];
 
     answers.forEach((answer) => {
       expect(numToKorean(answer.num, FormatOptions.MIXED)).toBe(answer.korean);
     });
   });
-
 
   test('억 단위 테스트', () => {
     const answers = [
