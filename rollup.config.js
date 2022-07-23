@@ -13,7 +13,7 @@ const banner =
   '*/\n';
 
 module.exports = {
-  input: 'src/numToKorean.ts',
+  input: 'src/num-to-korean.ts',
   output: [
     {
       file: 'dist/num-to-korean.js',
