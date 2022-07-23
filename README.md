@@ -42,10 +42,10 @@ npm install --save num-to-korean
 yarn add num-to-korean
 
 // jsdelivr
-<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.5.1/dist/num-to-korean.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.5.2/dist/num-to-korean.min.js"></script>
 
 // unpkg
-<script src="https://unpkg.com/num-to-korean@0.5.1/dist/num-to-korean.min.js"></script>
+<script src="https://unpkg.com/num-to-korean@0.5.2/dist/num-to-korean.min.js"></script>
 ```
 
 ## Usage
