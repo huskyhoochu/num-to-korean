@@ -104,7 +104,7 @@ import { numToKorean, FormatOptions } from 'num-to-korean';
 numToKorean(30864627, FormatOptions.MIXED);
 // -> 3,086만 4,627
 
-numTokorean(927483041001, 'mixed'); // 문자열 'mixed' 입력 가능
+numToKorean(927483041001, 'mixed'); // 문자열 'mixed' 입력 가능
 // -> 9,274억 8,304만 1,001
 ```
 
