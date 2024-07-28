@@ -81,14 +81,29 @@ class NumToKorean {
   }
 
   private flatTokenForFloatMode(): NumToKorean {
-    const dots: string[] = [];
-    let maxDot = '';
+    let dots: (Dot | Power)[] = [];
+    let maxDot: string = '';
 
     this.token.forEach((item) => {
       dots.push(item.dot);
     });
 
     [maxDot] = dots.join('').split('').slice(-1);
+
+    if (maxDot === undefined) {
+      dots = [];
+      this.token.forEach((item) => {
+        dots.push(item.power);
+      });
+
+      [maxDot] = dots.join('').split('').slice(-1);
+
+      this.result = this.token.map(
+        (item) => `${item.num}${item.power === maxDot ? `.${item.power}` : ''}`,
+      );
+
+      return this;
+    }
 
     this.result = this.token.map(
       (item) => `${item.num}${item.dot === maxDot ? `.${item.dot}` : ''}`,
@@ -98,13 +113,13 @@ class NumToKorean {
   }
 
   private moveToDotLast(): NumToKorean {
-    const matchResult = this.result.join('').match(/\.(만|억|조|경)/);
+    const matchResult = this.result.join('').match(/\.(십|백|천|만|억|조|경)/);
 
     if (matchResult) {
       const exactDot = matchResult[1];
       const removedDotResult = this.result
         .join('')
-        .replace(/(만|억|조|경)/g, '')
+        .replace(/(십|백|천|만|억|조|경)/g, '')
         .split('');
 
       this.result = [...removedDotResult, exactDot];
@@ -122,9 +137,9 @@ class NumToKorean {
         /\..*/,
         (match) => match.replace(/,/g, ''), // 불필요한 콤마 제거
       )
-      .replace(/\.(?=[만억조경]|$)/, '') // 모든 게 0으로 떨어져서 소수점만 남으면 소수점 제거
+      .replace(/\.(?=[십백천만억조경]|$)/, '') // 모든 게 0으로 떨어져서 소수점만 남으면 소수점 제거
       .replace(
-        /\.(\d*[1-9])?(0+)(?=[만억조경])/,
+        /\.(\d*[1-9])?(0+)(?=[십백천만억조경])/,
         (_, p1) => (p1 ? `.${p1}` : ''), // 0으로 끝나 는소수점은 마지막 0 제거
       )
       .split('');
@@ -308,7 +323,8 @@ class NumToKorean {
       .removeUnnecessaryChars()
       .makeZeroIfResultEmpty()
       .getResult()
-      .join('');
+      .join('')
+      .trim();
   }
 
   public getKorean(): string {
