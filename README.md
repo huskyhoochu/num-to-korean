@@ -14,6 +14,10 @@ NumToKorean은 숫자를 한글 표기로 변환해주는 함수입니다. 간�
 
 - 음수 표기 대응 (-12,345 -> 마이너스 일만이천삼백사십오)
 
+## v0.5.3 Change
+
+- float 모드를 추가했습니다. (하단 참고)
+
 ## v0.5.0 Change
 
 - 코드 가독성을 좋게 하고 유지보수를 쉽게 하기 위해 객체지향 프로그래밍으로 재설계했습니다. 핵심 로직은 변하지 않았습니다.
@@ -42,10 +46,10 @@ npm install --save num-to-korean
 yarn add num-to-korean
 
 // jsdelivr
-<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.5.2/dist/num-to-korean.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/num-to-korean@0.5.3/dist/num-to-korean.min.js"></script>
 
 // unpkg
-<script src="https://unpkg.com/num-to-korean@0.5.2/dist/num-to-korean.min.js"></script>
+<script src="https://unpkg.com/num-to-korean@0.5.3/dist/num-to-korean.min.js"></script>
 ```
 
 ## Usage
@@ -136,10 +140,28 @@ numToKorean(182418101, 'lingual_spacing');
 // -> 일억 팔천이백사십일만 팔천백일
 ```
 
+### Float: 소수점
+
+영어식 소수점 표현입니다.
+
+아직 반올림을 어느정도로 할지 적당한 디폴트 수준을 찾지 못해 실제 숫자가 그대로 표현됩니다.
+
+미리 반올림된 숫자를 넣는 것을 추천드립니다.
+
+```
+import { numToKorean, FormatOptions } from 'num-to-korean';
+
+numToKorean(1241353, FormatOptions.FLOAT);
+// -> 124.1353만
+
+numToKorean(182418101, 'float');
+// -> 1.82418101억
+```
+
 ## Test
 
 ```
-yarn test
+pnpm test
 ```
 
 `test` 폴더에 기초적인 테스트 케이스를 추가해두었습니다.
