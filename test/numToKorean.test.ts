@@ -63,6 +63,14 @@ describe('숫자 금액을 한글로 변환하기 테스트', () => {
     expect(numToKorean(answer.num, FormatOptions.NORMAL)).toBe(answer.korean);
   });
 
+  test('모든 자릿수가 숫자로 찼을 때: 잘못된 옵션', () => {
+    const answer = {
+      korean: '일십이억삼천사백오십육만칠천팔백구십팔',
+      num: 1234567898,
+    };
+    expect(numToKorean(answer.num, 'wrong_keyword')).toBe(answer.korean);
+  });
+
   test('모든 자릿수가 0일 때', () => {
     const answers = [
       {
