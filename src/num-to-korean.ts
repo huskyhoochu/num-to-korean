@@ -12,7 +12,8 @@ export type Format =
   | 'spacing'
   | 'mixed'
   | 'lingual'
-  | 'lingual_spacing';
+  | 'lingual_spacing'
+  | 'float';
 
 export const FormatOptions: {
   [key: string]: Format;
@@ -22,6 +23,7 @@ export const FormatOptions: {
   MIXED: 'mixed', // 한글 숫자 병기
   LINGUAL: 'lingual', // 구어체
   LINGUAL_SPACING: 'lingual_spacing', // 구어체 띄어쓰기
+  FLOAT: 'float', // 소수점 표현
 };
 
 class NumToKorean {
@@ -78,7 +80,74 @@ class NumToKorean {
     return this;
   }
 
-  private reverseTokenDropZero(): NumToKorean {
+  private flatTokenForFloatMode(): NumToKorean {
+    let dots: (Dot | Power)[] = [];
+    let maxDot: string = '';
+
+    this.token.forEach((item) => {
+      dots.push(item.dot);
+    });
+
+    [maxDot] = dots.join('').split('').slice(-1);
+
+    if (maxDot === undefined) {
+      dots = [];
+      this.token.forEach((item) => {
+        dots.push(item.power);
+      });
+
+      [maxDot] = dots.join('').split('').slice(-1);
+
+      this.result = this.token.map(
+        (item) => `${item.num}${item.power === maxDot ? `.${item.power}` : ''}`,
+      );
+
+      return this;
+    }
+
+    this.result = this.token.map(
+      (item) => `${item.num}${item.dot === maxDot ? `.${item.dot}` : ''}`,
+    );
+
+    return this;
+  }
+
+  private moveToDotLast(): NumToKorean {
+    const matchResult = this.result.join('').match(/\.(십|백|천|만|억|조|경)/);
+
+    if (matchResult) {
+      const exactDot = matchResult[1];
+      const removedDotResult = this.result
+        .join('')
+        .replace(/(십|백|천|만|억|조|경)/g, '')
+        .split('');
+
+      this.result = [...removedDotResult, exactDot];
+    } else {
+      this.result = this.result.map((item) => item.replace(/\./g, ''));
+    }
+
+    return this;
+  }
+
+  private removeUnnecessaryChars(): NumToKorean {
+    this.result = this.result
+      .join('')
+      .replace(
+        /\..*/,
+        (match) => match.replace(/,/g, ''), // 불필요한 콤마 제거
+      )
+      .replace(/\.(?=[십백천만억조경]|$)/, '') // 모든 게 0으로 떨어져서 소수점만 남으면 소수점 제거
+      .replace(
+        /\.(\d*[1-9])?(0+)(?=[십백천만억조경])/,
+        (_, p1) => (p1 ? `.${p1}` : ''), // 0으로 끝나 는소수점은 마지막 0 제거
+      )
+      .split('');
+
+    return this;
+  }
+
+  private swapZeroToComma(): NumToKorean {
     this.result = splitEvery(4, this.result)
       .map((item) => {
         const droppedZero = dropLastWhile(
@@ -92,19 +161,37 @@ class NumToKorean {
 
         return droppedZero;
       })
-      .reduce((acc: string[], val: string[]) => acc.concat(val), [])
-      .reverse();
+      .reduce((acc: string[], val: string[]) => acc.concat(val), []);
 
     return this;
   }
 
-  private reverseToken(): NumToKorean {
+  private onlyAddComma(): NumToKorean {
+    this.result = splitEvery(4, this.result)
+      .map((item) => {
+        if (item.length === 4) {
+          item.splice(3, 0, `,`);
+        }
+
+        return item;
+      })
+      .reduce((acc: string[], val: string[]) => acc.concat(val), []);
+
+    return this;
+  }
+
+  private onlyReverse(): NumToKorean {
+    this.result = this.result.reverse();
+
+    return this;
+  }
+
+  private addEmptyPositionWhenSymbolHasValue(): NumToKorean {
     this.result = splitEvery(4, this.result)
       .map((item) =>
         dotSymbol.indexOf(<Dot>item.join('')) > 0 ? ['', '', '', ''] : item,
       )
-      .reduce((acc: string[], val: string[]) => acc.concat(val), [])
-      .reverse();
+      .reduce((acc: string[], val: string[]) => acc.concat(val), []);
 
     return this;
   }
@@ -174,13 +261,19 @@ class NumToKorean {
   }
 
   private getNormal(): string {
-    return this.getToken().flatToken(false).reverseToken().getResult().join('');
+    return this.getToken()
+      .flatToken(false)
+      .addEmptyPositionWhenSymbolHasValue()
+      .onlyReverse()
+      .getResult()
+      .join('');
   }
 
   private getLingual(): string {
     return this.getToken()
       .flatToken(false)
-      .reverseToken()
+      .addEmptyPositionWhenSymbolHasValue()
+      .onlyReverse()
       .removeOneStr()
       .getResult()
       .join('');
@@ -189,7 +282,8 @@ class NumToKorean {
   private getSpacing(): string {
     return this.getToken()
       .flatToken(false)
-      .reverseToken()
+      .addEmptyPositionWhenSymbolHasValue()
+      .onlyReverse()
       .addSpacing()
       .getResult()
       .join('')
@@ -199,7 +293,8 @@ class NumToKorean {
   private getLingualSpacing(): string {
     return this.getToken()
       .flatToken(false)
-      .reverseToken()
+      .addEmptyPositionWhenSymbolHasValue()
+      .onlyReverse()
       .removeOneStr()
       .addSpacing()
       .getResult()
@@ -210,8 +305,22 @@ class NumToKorean {
   private getMixed(): string {
     return this.getToken()
       .flatToken(true)
-      .reverseTokenDropZero()
+      .swapZeroToComma()
+      .onlyReverse()
       .addSpacing()
+      .makeZeroIfResultEmpty()
+      .getResult()
+      .join('')
+      .trim();
+  }
+
+  private getFloat(): string {
+    return this.getToken()
+      .flatTokenForFloatMode()
+      .onlyAddComma()
+      .onlyReverse()
+      .moveToDotLast()
+      .removeUnnecessaryChars()
       .makeZeroIfResultEmpty()
       .getResult()
       .join('')
@@ -237,6 +346,10 @@ class NumToKorean {
 
     if (this.formatOption === FormatOptions.NORMAL) {
       return this.getNormal();
+    }
+
+    if (this.formatOption === FormatOptions.FLOAT) {
+      return this.getFloat();
     }
 
     return this.getNormal();
